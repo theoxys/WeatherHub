@@ -91,5 +91,10 @@ export const ThemeButton = styled.button`
     position: absolute;
     top: 30px;
     right: calc(50% - 550px);
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+
+    &:hover {
+        background-color: ${p => p.theme.hover};
+    }
 
 `

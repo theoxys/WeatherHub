@@ -8,6 +8,7 @@ declare module 'styled-components' {
         font: string;
         white: string;
         primary: string;
+        hover: string;
         logo: string;
     }
 }

@@ -19,25 +19,36 @@ import {
   RightTitle,
   ThemeButton
 } from './styled';
-import api from '../../services/api'
+import api, { createNewWeatherData } from '../../services/api'
 import { ThemeContext } from 'styled-components';
 import WeatherTable from '../../components/WeatherTable';
+import RankingTable from '../../components/RankingTable';
+import PlaceholderBox from '../../components/PlaceholderBox';
 
 interface MainPageProps{
   changeTheme(): void;
 }
 
 interface WeatherData{
-  main: {
-    temp: string;
-    temp_min: string;
-    temp_max: string;
-  }
-  sys:{
-    country: string;
-  }
-  name: string;
+  city: string;
+  country: string;
+  temp: string;
+  maxTemp: string;
+  minTemp: string;
+  wind: string;
+  clouds: string;
+  humidity: string;
+  rain: string;
+  sensation: string;
 }
+
+const ranking = [
+  {city: "Aparecida", country: "BR"},
+  {city: "Itajuba", country: "BR"},
+  {city: "Guaratingueta", country: "BR"},
+  {city: "Piranguinho", country: "BR"},
+  {city: "Roseira", country: "BR"},
+]
 
 const MainPage = (props: MainPageProps) => {
 
@@ -45,27 +56,17 @@ const MainPage = (props: MainPageProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [weatherData, setWeatherData] = useState<WeatherData | undefined>()
 
-  const handleFetchWeatherData = useCallback(async(e) => {
+  const handleFetchWeatherData = useCallback(async(e, city: string) => {
     e.preventDefault();
 
     const response = await api.get('/weather', {
       params:{
-        q:inputRef.current?.value,
+        q:city,
         appid: '80eec7703db8ff327e9706def79ce43e',
         units: 'metric'
       }
     })
-    let newData = {
-      main: {
-        temp: response.data.main.temp,
-        temp_min: response.data.main.temp_min,
-        temp_max: response.data.main.temp_max
-      },
-      sys:{
-        country: response.data.sys.country
-      },
-      name: response.data.name
-    }
+    let newData = createNewWeatherData(response);
     setWeatherData(newData)
   },[])
 
@@ -76,34 +77,49 @@ const MainPage = (props: MainPageProps) => {
       </ThemeButton>
       <LogoWrapper src={theme.logo}/>
 
-      <Form onSubmit={handleFetchWeatherData}>
+      <Form onSubmit={ e => handleFetchWeatherData(e, inputRef.current?.value!)}>
         <BiSearchAlt size={24} color={theme.font}/>
         <Input placeholder="Buscar cidade..." ref={inputRef}/>
       </Form>
 
       <Grid>
-        <LeftTitle>Condições climaticas</LeftTitle>
+        <LeftTitle>Condições climáticas</LeftTitle>
         <RightTitle>Destaques</RightTitle>
         <MainWrapper>
           <Infobox title="Quarta Feira | 13/01/2021" icon={ImNewspaper}>
             {weatherData ? 
             <WeatherTable
-              city={weatherData.name}
-              country={weatherData.sys.country}
-              minTemp={weatherData.main.temp_min}
-              maxTemp={weatherData.main.temp_max}
-              temp={weatherData.main.temp}
+              city={weatherData.city}
+              country={weatherData.country}
+              minTemp={weatherData.minTemp}
+              maxTemp={weatherData.maxTemp}
+              temp={weatherData.temp}
+              clouds={weatherData.clouds}
+              humidity={weatherData.humidity}
+              rain={weatherData.rain}
+              wind={weatherData.wind}
+              sensation={weatherData.sensation}
             /> 
             
-            : 'Faça uma pesquisa!'}
+            : <PlaceholderBox/>}
             
           </Infobox>
         </MainWrapper>
         <TopWrapper>
-          <Infobox title="Mais pesquisados" icon={AiOutlineBarChart}/>
+          <Infobox title="Mais pesquisados" icon={AiOutlineBarChart}>
+            <RankingTable 
+              rankingList={ranking}
+              onClick={handleFetchWeatherData}
+            />
+          </Infobox>
         </TopWrapper>
         <LastWrapper>
-          <Infobox title="Últimas pesquisas" icon={RiCalendar2Line}/>
+          <Infobox title="Últimas pesquisas" icon={RiCalendar2Line}>
+            <RankingTable 
+                rankingList={ranking}
+                onClick={handleFetchWeatherData}
+              />
+          </Infobox>
         </LastWrapper>
       </Grid>
 

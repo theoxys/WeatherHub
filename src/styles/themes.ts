@@ -7,6 +7,7 @@ export const Light = {
     font: '#2E2E2E',
     white: '#fff',
     primary: '#4DBFD9',
+    hover: '#f3f3f3',
     logo: Logo
 };
 
@@ -16,5 +17,6 @@ export const Dark = {
     font: '#e5e5e5',
     white: '#363D46',
     primary: '#4DBFD9',
+    hover: '#2E333B',
     logo: LogoWhite
 };
