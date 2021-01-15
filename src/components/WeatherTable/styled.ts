@@ -12,7 +12,7 @@ export const Title = styled.p<Title>`
 `
 export const Container = styled.div`
     width: 100%;
-    height: 500px;
+    height: 400px;
     color: ${p => p.theme.font};
 `
 export const Header = styled.p`

@@ -76,33 +76,31 @@ const MainPage = (props: MainPageProps) => {
         {(theme.title === 'light') ? <HiOutlineLightBulb size={20} color={theme.font}/> : <IoMdBulb size={20} color={theme.font}/>}
       </ThemeButton>
       <LogoWrapper src={theme.logo}/>
-
       <Form onSubmit={ e => handleFetchWeatherData(e, inputRef.current?.value!)}>
         <BiSearchAlt size={24} color={theme.font}/>
         <Input placeholder="Buscar cidade..." ref={inputRef}/>
       </Form>
-
       <Grid>
         <LeftTitle>Condições climáticas</LeftTitle>
         <RightTitle>Destaques</RightTitle>
         <MainWrapper>
           <Infobox title="Quarta Feira | 13/01/2021" icon={ImNewspaper}>
-            {weatherData ? 
-            <WeatherTable
-              city={weatherData.city}
-              country={weatherData.country}
-              minTemp={weatherData.minTemp}
-              maxTemp={weatherData.maxTemp}
-              temp={weatherData.temp}
-              clouds={weatherData.clouds}
-              humidity={weatherData.humidity}
-              rain={weatherData.rain}
-              wind={weatherData.wind}
-              sensation={weatherData.sensation}
-            /> 
-            
-            : <PlaceholderBox/>}
-            
+            {
+            weatherData ? 
+              <WeatherTable
+                city={weatherData.city}
+                country={weatherData.country}
+                minTemp={weatherData.minTemp}
+                maxTemp={weatherData.maxTemp}
+                temp={weatherData.temp}
+                clouds={weatherData.clouds}
+                humidity={weatherData.humidity}
+                rain={weatherData.rain}
+                wind={weatherData.wind}
+                sensation={weatherData.sensation}
+              /> 
+            : <PlaceholderBox/>
+            }            
           </Infobox>
         </MainWrapper>
         <TopWrapper>
