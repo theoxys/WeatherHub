@@ -48,7 +48,7 @@ export const Form = styled.form`
     height: 50px;
     border-radius:10px;
     background-color: ${p => p.theme.white};
-    margin-bottom: 30px;
+    margin-bottom: 60px;
     padding: 0 30px;
     display: flex;
     align-items: center;
@@ -57,7 +57,7 @@ export const Form = styled.form`
 
 export const LogoWrapper = styled.img`
     width: 400px;
-    margin-bottom: 30px;
+    margin-bottom: 60px;
 `
 
 export const Headline = styled.div`

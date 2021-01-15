@@ -8,7 +8,7 @@ export default createGlobalStyle`
         box-sizing: border-box;
         font-family: "Work Sans", sans-serif;
         border: none;
-
+        transition: all ease 0.1s;
     }
     body #root{
         background-color: ${props => props.theme.background};
