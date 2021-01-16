@@ -5,6 +5,8 @@
 
 Aplicação construída para obter dados climáticos de cidades em tempo real. A aplicação foi feita consumindo dados da API do OpenWeatherMap (  https://openweathermap.org/  ).
 
+O projeto foi colocado no ar pela hospedagem da Vercel e pode ser acessado pela URL https://weather-hub.vercel.app/
+
 ## Sobre a aplicação
 
 A aplicação foi 100% desenvolvida em React utilizando Typescript. Para o gerenciamento de estado dos componentes foram utilizados os React Hooks e para as chamadas na API foi utilizado o Axios. A criação dos estilos dos componentes foi feita utilizando Styled Components e a prototipação de interface foi construida no Figma.
