@@ -6,6 +6,14 @@ import {AiOutlineBarChart} from 'react-icons/ai'
 import {HiOutlineLightBulb} from 'react-icons/hi'
 import {BiSearchAlt} from 'react-icons/bi'
 import {IoMdBulb} from 'react-icons/io'
+import { getWeather } from '../../services/api'
+import { ThemeContext } from 'styled-components';
+import WeatherTable from '../../components/WeatherTable';
+import RankingTable from '../../components/RankingTable';
+import PlaceholderBox from '../../components/PlaceholderBox';
+import { getLastPicks, getTopPicks, registerSearch } from '../../services/firebase';
+import moment from 'moment';
+import 'moment/locale/pt-br'
 import { 
   Wrapper,
   MainWrapper,
@@ -19,12 +27,7 @@ import {
   RightTitle,
   ThemeButton
 } from './styled';
-import api, { createNewWeatherData } from '../../services/api'
-import { ThemeContext } from 'styled-components';
-import WeatherTable from '../../components/WeatherTable';
-import RankingTable from '../../components/RankingTable';
-import PlaceholderBox from '../../components/PlaceholderBox';
-import { getLastPicks, getTopPicks, registerSearch } from '../../services/firebase';
+
 
 interface MainPageProps{
   changeTheme(): void;
@@ -50,14 +53,6 @@ interface RankingData{
   country: string;
 }
 
-const ranking = [
-  {city: "Aparecida", country: "BR"},
-  {city: "Itajuba", country: "BR"},
-  {city: "Guaratingueta", country: "BR"},
-  {city: "Piranguinho", country: "BR"},
-  {city: "Roseira", country: "BR"},
-]
-
 const MainPage = (props: MainPageProps) => {
 
   const [lastPicks, setLastPicks] = useState<RankingData[]>();
@@ -68,15 +63,7 @@ const MainPage = (props: MainPageProps) => {
 
   const handleFetchWeatherData = useCallback(async(e, city: string) => {
     e.preventDefault();
-
-    const response = await api.get('/weather', {
-      params:{
-        q:city,
-        appid: '80eec7703db8ff327e9706def79ce43e',
-        units: 'metric'
-      }
-    })
-    let newData = createNewWeatherData(response);
+    let newData = await getWeather(city);
     registerSearch(newData.city, newData.country);
     setWeatherData(newData)
   },[])
@@ -94,7 +81,13 @@ const MainPage = (props: MainPageProps) => {
   useEffect(()=>{
     fetchLastPicks();
     fetchTopPicks();
-  }, [])
+  }, [fetchTopPicks, fetchLastPicks])
+
+  const getData = () => {
+    moment.locale('pt-br');
+    let date = moment(Date.now()).format('dddd | DD/MM/YYYY')
+    return date
+  }
 
   return (
     <Wrapper>
@@ -110,7 +103,7 @@ const MainPage = (props: MainPageProps) => {
         <LeftTitle>Condições climáticas</LeftTitle>
         <RightTitle>Destaques</RightTitle>
         <MainWrapper>
-          <Infobox title="Quarta Feira | 13/01/2021" icon={ImNewspaper}>
+          <Infobox title={getData()} icon={ImNewspaper}>
             {
             weatherData ? 
               <WeatherTable

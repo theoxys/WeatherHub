@@ -11,7 +11,7 @@ export const Container = styled.div`
 `
 export const Header = styled.div`
     padding: 30px 0;
-    border-bottom: 1px solid #C4C4C4;
+    border-bottom: 1px solid ${p => p.theme.hover};
     display: flex;
     margin-bottom: 30px;    
 `

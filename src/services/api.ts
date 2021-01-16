@@ -4,8 +4,15 @@ const api = axios.create({
     baseURL: 'http://api.openweathermap.org/data/2.5'
 })
 
-export const createNewWeatherData = (response: any) => {
-    let newData = {
+export const getWeather = async(city: string) => {
+    const response = await api.get('/weather', {
+        params:{
+          q:city,
+          appid: '80eec7703db8ff327e9706def79ce43e',
+          units: 'metric'
+        }
+      })
+      return {
         city: response.data.name,
         country: response.data.sys.country,
         temp: response.data.main.temp,
@@ -16,8 +23,7 @@ export const createNewWeatherData = (response: any) => {
         humidity: response.data.main.humidity,
         rain: response.data.main.pressure,
         sensation: response.data.main.feels_like,
-      }
-    return newData;
+    }
 }
 
 export default api;
