@@ -8,12 +8,12 @@ interface LineData{
     country: string;
 }
 
-interface RankingTable{
+interface RankingTableProps{
     rankingList: LineData[] | undefined;
     onClick(e: any, city:string): void;
 }
 
-const RankingTable = (props: RankingTable) => {
+const RankingTable = (props: RankingTableProps) => {
 
     return(
         <Container>

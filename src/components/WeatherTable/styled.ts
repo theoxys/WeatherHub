@@ -1,10 +1,10 @@
 import styled from 'styled-components'
 
-interface Title{
+interface TitleProps{
     size: string;
 }
 
-export const Title = styled.p<Title>`
+export const Title = styled.p<TitleProps>`
     font-size: ${props => props.size};
     font-family: "Work Sans";
     margin: 15px;
