@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useRef, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import Infobox from '../../components/Infobox';
 import { ImNewspaper } from 'react-icons/im';
 import {RiCalendar2Line} from 'react-icons/ri'
@@ -24,6 +24,7 @@ import { ThemeContext } from 'styled-components';
 import WeatherTable from '../../components/WeatherTable';
 import RankingTable from '../../components/RankingTable';
 import PlaceholderBox from '../../components/PlaceholderBox';
+import { getLastPicks, getTopPicks, registerSearch } from '../../services/firebase';
 
 interface MainPageProps{
   changeTheme(): void;
@@ -42,6 +43,13 @@ interface WeatherData{
   sensation: string;
 }
 
+interface RankingData{
+  city: string;
+  amount: string;
+  date: string;
+  country: string;
+}
+
 const ranking = [
   {city: "Aparecida", country: "BR"},
   {city: "Itajuba", country: "BR"},
@@ -52,6 +60,8 @@ const ranking = [
 
 const MainPage = (props: MainPageProps) => {
 
+  const [lastPicks, setLastPicks] = useState<RankingData[]>();
+  const [topPicks, setTopPicks] = useState<RankingData[]>();
   const theme = useContext(ThemeContext)
   const inputRef = useRef<HTMLInputElement>(null);
   const [weatherData, setWeatherData] = useState<WeatherData | undefined>()
@@ -67,8 +77,24 @@ const MainPage = (props: MainPageProps) => {
       }
     })
     let newData = createNewWeatherData(response);
+    registerSearch(newData.city, newData.country);
     setWeatherData(newData)
   },[])
+
+  const fetchLastPicks = useCallback(async()=>{
+    let lasPicksData = await getLastPicks()
+    setLastPicks(lasPicksData)
+  },[])
+
+  const fetchTopPicks = useCallback(async()=>{
+    let topPicksData = await getTopPicks()
+    setTopPicks(topPicksData)
+  },[])
+
+  useEffect(()=>{
+    fetchLastPicks();
+    fetchTopPicks();
+  }, [])
 
   return (
     <Wrapper>
@@ -106,7 +132,7 @@ const MainPage = (props: MainPageProps) => {
         <TopWrapper>
           <Infobox title="Mais pesquisados" icon={AiOutlineBarChart}>
             <RankingTable 
-              rankingList={ranking}
+              rankingList={topPicks}
               onClick={handleFetchWeatherData}
             />
           </Infobox>
@@ -114,7 +140,7 @@ const MainPage = (props: MainPageProps) => {
         <LastWrapper>
           <Infobox title="Últimas pesquisas" icon={RiCalendar2Line}>
             <RankingTable 
-                rankingList={ranking}
+                rankingList={lastPicks}
                 onClick={handleFetchWeatherData}
               />
           </Infobox>
