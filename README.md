@@ -1,46 +1,40 @@
-# Getting Started with Create React App
+[![Spaceship Calculator Screenshot](https://github.com/theoxys/WeatherHub/blob/main/src/assets/print.png?raw=true)](https://github.com/theoxys/WeatherHub/blob/main/src/assets/print.png?raw=true)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+# WeatherHub
 
-In the project directory, you can run:
+Aplicação construída para obter dados climáticos de cidades em tempo real. A aplicação foi feita consumindo dados da API do OpenWeatherMap (  https://openweathermap.org/  ).
 
-### `yarn start`
+## Sobre a aplicação
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+A aplicação foi 100% desenvolvida em React utilizando Typescript. Para o gerenciamento de estado dos componentes foram utilizados os React Hooks e para as chamadas na API foi utilizado o Axios. A criação dos estilos dos componentes foi feita utilizando Styled Components e a prototipação de interface foi construida no Figma.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Também foram utilizada outras bibliotecas como Eslint para padronização e organização do código, MomentJS para formatação de unidades de tempo e React-Icons para estilização.
 
-### `yarn test`
+Foi utilizado o Firebase como Baas (Backend as a service) para gerenciar os rankings de pesquisa da aplicação.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Instalação e Execução
 
-### `yarn build`
+Para executar o projeto é necessário a configuração das variáveis de ambiente como consta no arquivo `.env.example`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+#### Comandos para instalação:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+    $ npm install
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+ou caso utilize yarn:
 
-### `yarn eject`
+	$ yarn install
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### Comandos para Execução:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+	$ npm start
 
-## Learn More
+ ou caso utilize yarn:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+	$ yarn start
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+
+
+O projeto irá iniciar em:  [http://localhost:3000/](http://localhost:3000/)
