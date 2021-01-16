@@ -8,7 +8,7 @@ export const getWeather = async(city: string) => {
     const response = await api.get('/weather', {
         params:{
           q:city,
-          appid: '80eec7703db8ff327e9706def79ce43e',
+          appid: process.env.REACT_APP_OPEN_WEATHER_API_KEY,
           units: 'metric'
         }
       })
